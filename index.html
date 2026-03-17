@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Мистический Портал - Нумерология и Астрология</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 50%, #0d0d2b 100%);
+    min-height: 100vh;
+    color: #e0e0ff;
+    overflow-x: hidden;
+}
+.particles {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+}
+.particle {
+    position: absolute; width: 4px; height: 4px;
+    background: rgba(168, 85, 247, 0.6); border-radius: 50%;
+    animation: rise 15s infinite;
+}
+@keyframes rise {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+}
+.container {
+    max-width: 1400px; margin: 0 auto; padding: 40px 20px;
+    position: relative; z-index: 1;
+}
+header { text-align: center; margin-bottom: 50px; }
+h1 {
+    font-family: 'Cormorant Garamond', serif; font-size: 3.5rem;
+    background: linear-gradient(90deg, #a855f7, #6366f1, #3b82f6);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 10px;
+    animation: glow 3s ease-in-out infinite;
+}
+@keyframes glow {
+    0%, 100% { filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.5)); }
+    50% { filter: drop-shadow(0 0 40px rgba(99, 102, 241, 0.8)); }
+}
+.subtitle { font-size: 1.1rem; color: #a0a0c0; letter-spacing: 3px; text-transform: uppercase; }
+.current-date {
+    margin-top: 20px; padding: 15px 30px; background: rgba(99, 102, 241, 0.2);
+    border-radius: 12px; display: inline-block; border: 1px solid rgba(168, 85, 247, 0.3);
+}
+.current-date-title { font-size: 0.9rem; color: #a0a0c0; margin-bottom: 5px; }
+.current-date-value { font-size: 1.3rem; color: #c4b5fd; font-weight: 600; }
+.nav-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
+.nav-tab {
+    padding: 15px 30px; background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;
+    color: #e0e0ff; cursor: pointer; transition: all 0.3s ease;
+    font-family: 'Montserrat', sans-serif; font-weight: 500; user-select: none;
+}
+.nav-tab:hover, .nav-tab.active {
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    border-color: transparent; transform: translateY(-3px);
+}
+.section { display: none; animation: fadeIn 0.5s ease; }
+.section.active { display: block; }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.numbers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin-bottom: 40px; }
+.number-card {
+    background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px; padding: 20px; text-align: center; cursor: pointer;
+    transition: all 0.3s ease; backdrop-filter: blur(10px); user-select: none;
+}
+.number-card:hover {
+    transform: translateY(-10px); border-color: #a855f7;
+    box-shadow: 0 20px 40px rgba(168, 85, 247, 0.3);
+}
+.number-card.selected {
+    border-color: #a855f7; background: rgba(168, 85, 247, 0.2);
+    box-shadow: 0 0 40px rgba(168, 85, 247, 0.5);
+}
+.number-display {
+    font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 700;
+    background: linear-gradient(135deg, #a855f7, #6366f1);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.number-name { font-size: 0.9rem; color: #a0a0c0; margin-top: 10px; }
+.number-result {
+    display: none; background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px;
+    padding: 40px; backdrop-filter: blur(10px);
+}
+.number-result.active { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+.number-image-container {
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 0 60px rgba(99, 102, 241, 0.4);
+    animation: float 6s ease-in-out infinite; position: sticky; top: 20px;
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+.number-image { width: 100%; height: auto; display: block; }
+.number-info h3 {
+    font-family: 'Cormorant Garamond', serif; font-size: 2.5rem;
+    color: #c4b5fd; margin-bottom: 20px;
+}
+.number-section {
+    background: rgba(99, 102, 241, 0.1); padding: 25px;
+    border-radius: 12px; border-left: 3px solid #6366f1; margin-bottom: 25px;
+}
+.number-section-title {
+    font-weight: 600; color: #a855f7; margin-bottom: 15px;
+    display: flex; align-items: center; gap: 10px; font-size: 1.1rem;
+}
+.prediction-text { line-height: 2; color: #d0d0f0; font-size: 0.95rem; text-align: justify; }
+.famous-people-list { color: #d0d0f0; line-height: 1.8; }
+.horoscope-form {
+    background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px; padding: 40px; backdrop-filter: blur(10px);
+    max-width: 600px; margin: 0 auto 40px;
+}
+.form-group { margin-bottom: 25px; }
+.form-label { display: block; margin-bottom: 10px; color: #a0a0c0; font-weight: 500; }
+.form-input {
+    width: 100%; padding: 15px 20px; background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 12px;
+    color: #e0e0ff; font-family: 'Montserrat', sans-serif; font-size: 1rem; transition: all 0.3s ease;
+}
+.form-input:focus {
+    outline: none; border-color: #a855f7;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.btn {
+    padding: 15px 30px; border: none; border-radius: 12px;
+    font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 600;
+    cursor: pointer; transition: all 0.3s ease;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+}
+.btn-primary { background: linear-gradient(135deg, #6366f1, #a855f7); color: white; width: 100%; }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4); }
+.horoscope-result {
+    display: none; background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px;
+    padding: 40px; backdrop-filter: blur(10px);
+}
+.horoscope-result.active { display: block; }
+.horoscope-header { text-align: center; margin-bottom: 30px; }
+.horoscope-name { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: #c4b5fd; margin-bottom: 10px; }
+.horoscope-zodiac { color: #a855f7; font-size: 1.2rem; }
+.zodiac-image-container {
+    width: 220px; height: 220px; margin: 0 auto 30px; border-radius: 50%;
+    overflow: hidden; box-shadow: 0 0 60px rgba(168, 85, 247, 0.5);
+    animation: rotate 30s linear infinite;
+}
+@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.zodiac-image { width: 100%; height: 100%; object-fit: cover; }
+.horoscope-tabs { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+.horoscope-tab {
+    padding: 10px 20px; background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px;
+    color: #e0e0ff; cursor: pointer; transition: all 0.3s ease; user-select: none;
+}
+.horoscope-tab:hover, .horoscope-tab.active {
+    background: linear-gradient(135deg, #6366f1, #a855f7); border-color: transparent;
+}
+.horoscope-content { line-height: 1.8; color: #c0c0e0; }
+.horoscope-section { display: none; }
+.horoscope-section.active { display: block; animation: fadeIn 0.3s ease; }
+.prediction-card {
+    background: rgba(99, 102, 241, 0.1); padding: 25px;
+    border-radius: 12px; border-left: 3px solid #6366f1; margin-bottom: 20px;
+}
+.prediction-title {
+    font-weight: 600; color: #a855f7; margin-bottom: 15px;
+    display: flex; align-items: center; gap: 10px; font-size: 1.1rem;
+}
+.compatibility-form {
+    background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px; padding: 40px; backdrop-filter: blur(10px);
+    max-width: 800px; margin: 0 auto 40px;
+}
+.compatibility-result {
+    display: none; background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px;
+    padding: 40px; backdrop-filter: blur(10px);
+}
+.compatibility-result.active { display: block; }
+.compatibility-score { text-align: center; margin-bottom: 30px; }
+.score-circle {
+    width: 180px; height: 180px; border-radius: 50%;
+    background: conic-gradient(#a855f7 0deg, #6366f1 0deg);
+    margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
+    position: relative; animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+.score-inner {
+    width: 140px; height: 140px; border-radius: 50%; background: #0a0a1a;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 700; color: #c4b5fd;
+}
+.compatibility-details { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.detail-card {
+    background: rgba(99, 102, 241, 0.1); padding: 25px;
+    border-radius: 12px; border-left: 3px solid #6366f1;
+}
+.detail-title {
+    font-weight: 600; color: #a855f7; margin-bottom: 15px;
+    display: flex; align-items: center; gap: 10px;
+}
+.personality-result {
+    display: none; background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px;
+    padding: 40px; backdrop-filter: blur(10px);
+}
+.personality-result.active { display: block; }
+.personality-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px; }
+.trait-card {
+    background: rgba(99, 102, 241, 0.1); padding: 25px;
+    border-radius: 15px; border-left: 3px solid #6366f1; transition: all 0.3s ease;
+}
+.trait-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3); }
+.trait-icon { font-size: 2.5rem; margin-bottom: 15px; }
+.trait-title { font-weight: 600; color: #a855f7; margin-bottom: 15px; font-size: 1.2rem; }
+.trait-description { color: #c0c0e0; line-height: 1.8; }
+.name-analysis-form {
+    background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px; padding: 40px; backdrop-filter: blur(10px);
+    max-width: 700px; margin: 0 auto 40px;
+}
+.name-analysis-result {
+    display: none; background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px;
+    padding: 40px; backdrop-filter: blur(10px);
+}
+.name-analysis-result.active { display: block; }
+.name-breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 10px; margin: 30px 0; }
+.letter-card {
+    background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 12px; padding: 15px 10px; text-align: center; transition: all 0.3s ease;
+}
+.letter-card:hover { transform: translateY(-5px); background: rgba(168, 85, 247, 0.3); }
+.letter-display { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700; color: #c4b5fd; }
+.letter-value { font-size: 0.8rem; color: #a0a0c0; margin-top: 5px; }
+.name-section {
+    background: rgba(99, 102, 241, 0.1); padding: 25px;
+    border-radius: 15px; border-left: 3px solid #6366f1; margin-bottom: 25px;
+}
+.name-section-title {
+    font-weight: 600; color: #a855f7; margin-bottom: 15px;
+    display: flex; align-items: center; gap: 10px; font-size: 1.2rem;
+}
+.vowel-consonant { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+.vc-card { background: rgba(168, 85, 247, 0.15); padding: 20px; border-radius: 12px; text-align: center; }
+.vc-title { color: #a855f7; font-weight: 600; margin-bottom: 10px; }
+.vc-list { color: #d0d0f0; font-size: 1.1rem; }
+.numerology-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0; }
+.num-card {
+    background: rgba(99, 102, 241, 0.15); padding: 20px; border-radius: 15px;
+    text-align: center; border: 1px solid rgba(168, 85, 247, 0.2);
+}
+.num-value {
+    font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 700;
+    background: linear-gradient(135deg, #a855f7, #6366f1);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.num-label { color: #a0a0c0; margin-top: 10px; font-size: 0.9rem; }
+.num-desc { color: #c0c0e0; margin-top: 15px; font-size: 0.85rem; line-height: 1.6; }
+footer { text-align: center; padding: 40px 20px; color: #606080; font-size: 0.9rem; margin-top: 60px; }
+@media (max-width: 768px) {
+    h1 { font-size: 2.5rem; }
+    .number-result.active, .compatibility-details, .vowel-consonant { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .zodiac-image-container { width: 150px; height: 150px; }
+}
+</style>
+</head>
+<body>
+<div class="particles" id="particles"></div>
+<div class="container">
+<header>
+    <h1>✨ Мистический Портал ✨</h1>
+    <p class="subtitle">Нумерология • Астрология • Психология • Анализ Имени</p>
+    <div class="current-date">
+        <div class="current-date-title">📅 Сегодняшняя дата</div>
+        <div class="current-date-value" id="currentDate"></div>
+    </div>
+</header>
+<nav class="nav-tabs">
+    <div class="nav-tab active" onclick="showSection('numbers')">🔢 Любимое Число</div>
+    <div class="nav-tab" onclick="showSection('horoscope')">🔮 Гороскоп</div>
+    <div class="nav-tab" onclick="showSection('compatibility')">💕 Совместимость</div>
+    <div class="nav-tab" onclick="showSection('personality')">👤 Личность</div>
+    <div class="nav-tab" onclick="showSection('nameAnalysis')">📝 Анализ Имени</div>
+</nav>
+
+<!-- Numbers Section -->
+<section id="numbers" class="section active">
+    <h2 style="text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 30px; color: #c4b5fd;">
+        Выберите своё любимое число от 0 до 9
+    </h2>
+    <div class="numbers-grid">
+        <!-- ЧИСЛО 0 - ДОБАВЛЕНО -->
+        <div class="number-card" onclick="selectNumber(0)">
+            <div class="number-display">0</div>
+            <div class="number-name">Бесконечность</div>
+        </div>
+        <div class="number-card" onclick="selectNumber(1)">
+            <div class="number-display">1</div>
+            <div class="number-name">Лидер</div>
+        </div>
+        <div class="number-card" onclick="selectNumber(2)">
+            <div class="number-display">2</div>
+            <div class="number-name">Дипломат</div>
+        </div>
+        <div class="number-card" onclick="selectNumber(3)">
+            <div class="number-display">3</div>
+            <div class="number-name">Творец</div>
+        </div>
+        <div class="number-card" onclick="selectNumber(4)">
+            <div class="number-display">4</div>
+            <div class="number-name">Строитель</div>
+        </div>
+        <div class="number-card" onclick="selectNumber(5)">
+            <div class="number-display">5</div>
+            <div class="number-name">Искатель</div>
+        </div>
+        <div class="number-card" onclick="selectNumber(6)">
+            <div class="number-display">6</div>
+            <div class="number-name">Хранитель</div>
+        </div>
+        <div class="number-card" onclick="selectNumber(7)">
+            <div class="number-display">7</div>
+            <div class="number-name">Мудрец</div>
+        </div>
+        <div class="number-card" onclick="selectNumber(8)">
+            <div class="number-display">8</div>
+            <div class="number-name">Победитель</div>
+        </div>
+        <div class="number-card" onclick="selectNumber(9)">
+            <div class="number-display">9</div>
+            <div class="number-name">Гуманист</div>
+        </div>
+    </div>
+    <div class="number-result" id="numberResult">
+        <div class="number-image-container">
+            <img id="numberImage" src="" alt="Число" class="number-image">
+        </div>
+        <div class="number-info">
+            <h3 id="numberTitle">Число 0</h3>
+            <div class="number-section"><div class="number-section-title">🌟 Исторический контекст</div><div class="prediction-text" id="numberHistory"></div></div>
+            <div class="number-section"><div class="number-section-title">👤 Описание личности</div><div class="prediction-text" id="numberDescription"></div></div>
+            <div class="number-section"><div class="number-section-title">👑 Известные люди</div><div class="famous-people-list" id="famousPeople"></div></div>
+            <div class="number-section"><div class="number-section-title">💼 Карьера</div><div class="prediction-text" id="numberCareer"></div></div>
+            <div class="number-section"><div class="number-section-title">💕 Любовь</div><div class="prediction-text" id="numberLove"></div></div>
+            <div class="number-section"><div class="number-section-title">💡 Рекомендации</div><div class="prediction-text" id="numberAdvice"></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- Horoscope Section -->
+<section id="horoscope" class="section">
+    <div class="horoscope-form">
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 30px; color: #c4b5fd; text-align: center;">Узнайте свой гороскоп</h2>
+        <div class="form-group">
+            <label class="form-label">Ваше имя</label>
+            <input type="text" class="form-input" id="horoscopeName" placeholder="Введите ваше имя">
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Дата рождения</label>
+                <input type="date" class="form-input" id="birthDate">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Время рождения (необязательно)</label>
+                <input type="time" class="form-input" id="birthTime">
+            </div>
+        </div>
+        <button class="btn btn-primary" onclick="generateHoroscope()"><span>🔮</span> Получить гороскоп</button>
+    </div>
+    <div class="horoscope-result" id="horoscopeResult">
+        <div class="horoscope-header">
+            <div class="zodiac-image-container">
+                <img id="zodiacImage" src="" alt="Знак зодиака" class="zodiac-image">
+            </div>
+            <h3 class="horoscope-name" id="horoscopeUserName">Имя</h3>
+            <div class="horoscope-zodiac" id="horoscopeZodiac">Знак зодиака</div>
+        </div>
+        <div class="horoscope-tabs">
+            <div class="horoscope-tab active" onclick="showHoroscopeTab('day')">На сегодня</div>
+            <div class="horoscope-tab" onclick="showHoroscopeTab('month')">На месяц</div>
+            <div class="horoscope-tab" onclick="showHoroscopeTab('year')">На год</div>
+            <div class="horoscope-tab" onclick="showHoroscopeTab('personality')">Личность</div>
+        </div>
+        <div class="horoscope-content">
+            <div class="horoscope-section active" id="daySection">
+                <div class="prediction-card"><div class="prediction-title">💫 Общий прогноз</div><div class="prediction-text" id="dayGeneral"></div></div>
+                <div class="prediction-card"><div class="prediction-title">💕 Любовь</div><div class="prediction-text" id="dayLove"></div></div>
+                <div class="prediction-card"><div class="prediction-title">💼 Работа</div><div class="prediction-text" id="dayWork"></div></div>
+                <div class="prediction-card"><div class="prediction-title">🏥 Здоровье</div><div class="prediction-text" id="dayHealth"></div></div>
+                <div class="prediction-card"><div class="prediction-title">✨ Совет дня</div><div class="prediction-text" id="dayAdvice"></div></div>
+            </div>
+            <div class="horoscope-section" id="monthSection">
+                <div class="prediction-card"><div class="prediction-title">🌙 События месяца</div><div class="prediction-text" id="monthGeneral"></div></div>
+                <div class="prediction-card"><div class="prediction-title">📈 Карьера</div><div class="prediction-text" id="monthWork"></div></div>
+                <div class="prediction-card"><div class="prediction-title">💖 Личная жизнь</div><div class="prediction-text" id="monthLove"></div></div>
+                <div class="prediction-card"><div class="prediction-title">🎯 Задачи месяца</div><div class="prediction-text" id="monthTasks"></div></div>
+            </div>
+            <div class="horoscope-section" id="yearSection">
+                <div class="prediction-card"><div class="prediction-title">🌟 Темы года</div><div class="prediction-text" id="yearGeneral"></div></div>
+                <div class="prediction-card"><div class="prediction-title">🎯 Цели</div><div class="prediction-text" id="yearGoals"></div></div>
+                <div class="prediction-card"><div class="prediction-title">⚠️ Внимание</div><div class="prediction-text" id="yearWarning"></div></div>
+                <div class="prediction-card"><div class="prediction-title">🔮 Карма</div><div class="prediction-text" id="yearKarma"></div></div>
+            </div>
+            <div class="horoscope-section" id="personalitySection">
+                <div class="prediction-card"><div class="prediction-title">🎭 Черты характера</div><div class="prediction-text" id="personalityTraits"></div></div>
+                <div class="prediction-card"><div class="prediction-title">💪 Сильные стороны</div><div class="prediction-text" id="personalityStrengths"></div></div>
+                <div class="prediction-card"><div class="prediction-title">🌱 Зоны роста</div><div class="prediction-text" id="personalityGrowth"></div></div>
+                <div class="prediction-card"><div class="prediction-title">🎁 Таланты</div><div class="prediction-text" id="personalityTalents"></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Compatibility Section -->
+<section id="compatibility" class="section">
+    <div class="compatibility-form">
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 30px; color: #c4b5fd; text-align: center;">Проверьте совместимость</h2>
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Ваше имя</label>
+                <input type="text" class="form-input" id="compatName1" placeholder="Ваше имя">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Имя партнёра</label>
+                <input type="text" class="form-input" id="compatName2" placeholder="Имя партнёра">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Ваша дата рождения</label>
+                <input type="date" class="form-input" id="compatDate1">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Дата рождения партнёра</label>
+                <input type="date" class="form-input" id="compatDate2">
+            </div>
+        </div>
+        <button class="btn btn-primary" onclick="calculateCompatibility()"><span>💕</span> Рассчитать</button>
+    </div>
+    <div class="compatibility-result" id="compatibilityResult">
+        <div class="compatibility-score">
+            <div class="score-circle" id="scoreCircle"><div class="score-inner" id="scoreValue">0%</div></div>
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: #c4b5fd;"><span id="compatNames">Имя 1 & Имя 2</span></h3>
+        </div>
+        <div class="compatibility-details">
+            <div class="detail-card"><div class="detail-title">💖 Любовь</div><div class="prediction-text" id="compatLove"></div></div>
+            <div class="detail-card"><div class="detail-title">🤝 Дружба</div><div class="prediction-text" id="compatFriend"></div></div>
+            <div class="detail-card"><div class="detail-title">💼 Бизнес</div><div class="prediction-text" id="compatBusiness"></div></div>
+            <div class="detail-card"><div class="detail-title">💡 Советы</div><div class="prediction-text" id="compatAdvice"></div></div>
+            <div class="detail-card"><div class="detail-title">🔮 Карма</div><div class="prediction-text" id="compatKarma"></div></div>
+            <div class="detail-card"><div class="detail-title">🌟 Будущее</div><div class="prediction-text" id="compatFuture"></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- Personality Section -->
+<section id="personality" class="section">
+    <div class="horoscope-form">
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 30px; color: #c4b5fd; text-align: center;">Анализ личности</h2>
+        <div class="form-group">
+            <label class="form-label">Ваше полное имя</label>
+            <input type="text" class="form-input" id="personalityName" placeholder="Введите ваше полное имя">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Дата рождения</label>
+            <input type="date" class="form-input" id="personalityDate">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Время рождения (необязательно)</label>
+            <input type="time" class="form-input" id="personalityTime">
+        </div>
+        <button class="btn btn-primary" onclick="generatePersonality()"><span>👤</span> Анализировать</button>
+    </div>
+    <div class="personality-result" id="personalityResult">
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: #c4b5fd; text-align: center; margin-bottom: 30px;" id="personalityUserName">Имя</h3>
+        <div class="numerology-grid">
+            <div class="num-card"><div class="num-value" id="lifePathNum">0</div><div class="num-label">Число пути</div><div class="num-desc" id="lifePathDesc">Описание</div></div>
+            <div class="num-card"><div class="num-value" id="soulNum">0</div><div class="num-label">Число души</div><div class="num-desc" id="soulDesc">Описание</div></div>
+            <div class="num-card"><div class="num-value" id="personalityNum">0</div><div class="num-label">Число личности</div><div class="num-desc" id="personalityNumDesc">Описание</div></div>
+            <div class="num-card"><div class="num-value" id="destinyNum">0</div><div class="num-label">Число судьбы</div><div class="num-desc" id="destinyDesc">Описание</div></div>
+        </div>
+        <div class="personality-grid" id="personalityGrid"></div>
+    </div>
+</section>
+
+<!-- Name Analysis Section -->
+<section id="nameAnalysis" class="section">
+    <div class="name-analysis-form">
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 30px; color: #c4b5fd; text-align: center;">Анализ имени</h2>
+        <div class="form-group">
+            <label class="form-label">Фамилия</label>
+            <input type="text" class="form-input" id="surnameInput" placeholder="Введите фамилию">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Имя</label>
+            <input type="text" class="form-input" id="nameInput" placeholder="Введите имя">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Отчество</label>
+            <input type="text" class="form-input" id="patronymicInput" placeholder="Введите отчество">
+        </div>
+        <button class="btn btn-primary" onclick="analyzeName()"><span>📝</span> Анализировать</button>
+    </div>
+    <div class="name-analysis-result" id="nameAnalysisResult">
+        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: #c4b5fd; text-align: center; margin-bottom: 30px;" id="fullNameDisplay">Полное имя</h3>
+        <div class="name-section"><div class="name-section-title">🔤 Разбор по буквам</div><div class="name-breakdown" id="letterBreakdown"></div></div>
+        <div class="vowel-consonant">
+            <div class="vc-card"><div class="vc-title">🅰️ Гласные</div><div class="vc-list" id="vowelList"></div></div>
+            <div class="vc-card"><div class="vc-title">🅱️ Согласные</div><div class="vc-list" id="consonantList"></div></div>
+        </div>
+        <div class="numerology-grid">
+            <div class="num-card"><div class="num-value" id="nameNumber">0</div><div class="num-label">Число имени</div><div class="num-desc" id="nameNumberDesc">Описание</div></div>
+            <div class="num-card"><div class="num-value" id="surnameNumber">0</div><div class="num-label">Число фамилии</div><div class="num-desc" id="surnameNumberDesc">Описание</div></div>
+            <div class="num-card"><div class="num-value" id="patronymicNumber">0</div><div class="num-label">Число отчества</div><div class="num-desc" id="patronymicNumberDesc">Описание</div></div>
+            <div class="num-card"><div class="num-value" id="fullNameNumber">0</div><div class="num-label">Общее число</div><div class="num-desc" id="fullNameNumberDesc">Описание</div></div>
+        </div>
+        <div class="name-section"><div class="name-section-title">📊 Гласные буквы</div><div class="prediction-text" id="vowelAnalysis"></div></div>
+        <div class="name-section"><div class="name-section-title">📊 Согласные буквы</div><div class="prediction-text" id="consonantAnalysis"></div></div>
+        <div class="name-section"><div class="name-section-title">🎯 Характеристика имени</div><div class="prediction-text" id="nameCharacteristic"></div></div>
+        <div class="name-section"><div class="name-section-title">🏛️ Характеристика фамилии</div><div class="prediction-text" id="surnameCharacteristic"></div></div>
+        <div class="name-section"><div class="name-section-title">👨‍👦 Характеристика отчества</div><div class="prediction-text" id="patronymicCharacteristic"></div></div>
+        <div class="name-section"><div class="name-section-title">💫 Полная характеристика</div><div class="prediction-text" id="fullCharacteristic"></div></div>
+        <div class="name-section"><div class="name-section-title">🔮 Кармическое значение</div><div class="prediction-text" id="karmicMeaning"></div></div>
+        <div class="name-section"><div class="name-section-title">💡 Рекомендации</div><div class="prediction-text" id="nameAdvice"></div></div>
+    </div>
+</section>
+
+<footer>
+    <p>© Создано Тереховой Татьяной Алексеевной город Воронеж 2026г</p>
+</footer>
+</div>
+<script>
+const letterValues = {
+    'а': 1, 'и': 1, 'с': 1, 'ъ': 1, 'б': 2, 'й': 2, 'т': 2, 'ы': 2,
+    'в': 3, 'к': 3, 'у': 3, 'ь': 3, 'г': 4, 'л': 4, 'ф': 4, 'э': 4,
+    'д': 5, 'м': 5, 'х': 5, 'ю': 5, 'е': 6, 'н': 6, 'ц': 6, 'я': 6,
+    'ё': 7, 'о': 7, 'ч': 7, 'ж': 8, 'п': 8, 'ш': 8, 'з': 9, 'р': 9, 'щ': 9
+};
+const vowels = ['а', 'е', 'ё', 'и', 'о', 'у', 'ы', 'э', 'ю', 'я'];
+
+// ⭐ ЗНАКИ ЗОДИАКА - ЗАМЕНИТЕ ССЫЛКИ НА ВАШИ КАРТИНКИ ⭐
+const zodiacSigns = [
+    { name: 'Козерог', start: '12-22', end: '01-19', element: 'Земля', image: 'images/capricorn.png' },
+    { name: 'Водолей', start: '01-20', end: '02-18', element: 'Воздух', image: 'images/aquarius.png' },
+    { name: 'Рыбы', start: '02-19', end: '03-20', element: 'Вода', image: 'images/pisces.png' },
+    { name: 'Овен', start: '03-21', end: '04-19', element: 'Огонь', image: 'images/aries.png' },
+    { name: 'Телец', start: '04-20', end: '05-20', element: 'Земля', image: 'images/taurus.png' },
+    { name: 'Близнецы', start: '05-21', end: '06-20', element: 'Воздух', image: 'images/gemini.png' },
+    { name: 'Рак', start: '06-21', end: '07-22', element: 'Вода', image: 'images/cancer.png' },
+    { name: 'Лев', start: '07-23', end: '08-22', element: 'Огонь', image: 'images/leo.png' },
+    { name: 'Дева', start: '08-23', end: '09-22', element: 'Земля', image: 'images/virgo.png' },
+    { name: 'Весы', start: '09-23', end: '10-22', element: 'Воздух', image: 'images/libra.png' },
+    { name: 'Скорпион', start: '10-23', end: '11-21', element: 'Вода', image: 'images/scorpio.png' },
+    { name: 'Стрелец', start: '11-22', end: '12-21', element: 'Огонь', image: 'images/sagittarius.png' }
+];
+
+// ⭐ ЧИСЛА 0-9 - ЗАМЕНИТЕ ССЫЛКИ НА ВАШИ КАРТИНКИ ⭐
+const numberData = {
+    0: {
+        image: 'images/number0.png',
+        title: 'Число 0 — Бесконечность и Потенциал',
+        history: 'Ноль символизирует бесконечность, потенциал и духовное начало. В нумерологии это число считается источником всех остальных чисел, содержащим в себе весь универсум. Древние мудрецы считали ноль символом пустоты из которой рождается всё сущее. В восточных традициях ноль ассоциируется с просветлением и освобождением от кармических уз. Математически ноль уникален — он одновременно ничего и всё. В таро ноль соответствует Шуту — началу нового пути. Ноль усиливает энергию других чисел рядом с которыми находится. Это число духовного совершенства и завершения циклов.',
+        description: 'Вы обладаете уникальным сочетанием всех чисел от 1 до 9. Ваша личность многогранна и полна потенциала. Вы способны адаптироваться к любым ситуациям и видеть возможности там, где другие видят пустоту. Ваша духовная связь сильна, вы часто чувствуете то, что другие не замечают. Вы обладаете врождённой мудростью и интуицией. Ваша задача — реализовать весь свой потенциал. Вы можете быть кем угодно, ведь ноль содержит все возможности. Ваша энергия загадочна и притягательна. Люди чувствуют вашу глубину и тянутся к вам.',
+        famous: 'Духовные лидеры, мистики, философы, просветлённые мастера',
+        career: 'В карьере вы можете преуспеть в любой области. Ваша адаптивность — ключ к успеху. Духовные практики, психология, искусство, исследование — ваши сильные стороны. Вы видите возможности там, где другие видят пустоту.',
+        love: 'В любви вы ищете глубокую духовную связь. Вам важен партнёр который понимает вашу многогранность. Отношения должны давать свободу для роста. Вы притягиваете тех кто готов к трансформации.',
+        advice: 'Доверяйте вселенной. Все пути открыты перед вами. Медитируйте и слушайте внутренний голос. Реализуйте свой безграничный потенциал. Не бойтесь начинать с чистого листа. Ваша сила в пустоте которая содержит всё.'
+    },
+    1: {
+        image: 'images/number1.png',
+        title: 'Число 1 — Лидер и Первопроходец',
+        history: 'Единица символизирует начало всего сущего и является первым числом во всех нумерологических системах мира. В древних традициях единица считалась числом Бога-Творца. В каббале ассоциируется с первой сфирой Кетер. Пифагорейцы считали единицу источником всех чисел. В китайской нумерологии символизирует янскую энергию. Исторически ассоциировалась с солнцем. Многие древние цивилизации помещали единицу в центр космологических систем. В таро соответствует Магу. Археологические находки показывают культ единицы в шумерской цивилизации.',
+        description: 'Вы — прирождённый лидер с сильной волей и независимым характером. Вам свойственны оригинальность мышления, амбициозность и стремление быть первым. Вы не любите следовать за другими, предпочитая прокладывать свой путь. Ваша внутренняя сила позволяет преодолевать препятствия. Вы обладаете способностью видеть возможности там, где другие видят проблемы. Ваша независимость иногда воспринимается как упрямство. Вы предпочитаете работать самостоятельно или занимать руководящие позиции. Ваша энергия заразительна, люди тянутся к вам. Однако важно научиться слушать других. Баланс между независимостью и сотрудничеством — ключ к успеху.',
+        famous: 'Леонардо ди Каприо, Джордж Клуни, Том Хэнкс, Опра Уинфри, Наполеон Бонапарт, Мартин Лютер Кинг, Альберт Эйнштейн, Стив Джобс, Коко Шанель',
+        career: 'В карьере вы стремитесь к лидерским позициям. Предпринимательство, управление проектами, руководящие должности — области где вы раскроете потенциал. Вы обладаете даром видеть общую картину и направлять команду. Ваша способность брать ответственность делает вас ценным руководителем. Однако важно научиться делегировать задачи. Финансовая независимость имеет большое значение. Вы не боитесь рисковать и инвестировать в себя. В долгосрочной перспективе можете создать собственный бизнес.',
+        love: 'В любви вы ищете партнёра который уважает вашу независимость. Вам важно сохранять личное пространство. Вы не склонны к быстрому сближению, предпочитая медленно строить отношения. Ваша страстность проявляется постепенно. Вы ищете равного партнёра. Романтика важна, но вы предпочитаете действия словам. В отношениях вы берёте роль защитника. Идеальный партнёр — человек с собственными целями. Вы цените честность и прямоту.',
+        advice: 'Развивайте лидерские качества но учитесь слушать. Не бойтесь инициативы. Доверяйте интуиции. Находите баланс между независимостью и сотрудничеством. Помните что лидеру нужна поддержка. Развивайте эмоциональный интеллект. Не подавляйте других своей волей. Учитесь делегировать. Ваша миссия — вдохновлять примером. Будьте первопроходцем. Не бойтесь идти против течения. Развивайте терпение. Заботьтесь о здоровье. Окружайте себя позитивными людьми.'
+    },
+    2: {
+        image: 'images/number2.png',
+        title: 'Число 2 — Дипломат и Миротворец',
+        history: 'Двойка — число гармонии и партнёрства. В древних традициях символ дуальности мира. Пифагорейцы называли числом разделения. В китайской философии ассоциируется с иньской энергией. Древние египтяне связывали с луной. В каббале соответствует второй сфире Хокма. Исторически символизировала сотрудничество и дипломатию. Многие мирные договоры заключались под влиянием двойки. В астрологии управляется луной. В таро соответствует Верховной Жрице.',
+        description: 'Вы — тонкий дипломат с прекрасной интуицией. Вам свойственны чувствительность, эмпатия и умение понимать других. Вы предпочитаете избегать конфликтов и ищете гармонию. Ваша мягкость часто воспринимается как слабость, но это проявление внутренней силы. Вы обладаете способностью видеть ситуацию с разных точек зрения. Ваша интуиция развита сильно. Вы цените отношения выше материальных благ. Ваша чувствительность делает вас восприимчивым к атмосфере. Вы не любите быть в центре внимания. Важно научиться отстаивать границы.',
+        famous: 'Мадонна, Дженнифер Энистон, София Лорен, Принцесса Диана, Джонни Депп, Кейт Миддлтон, Дэвид Бекхэм, Мишель Обама, Барак Обама',
+        career: 'В карьере вы преуспеваете в ролях требующих сотрудничества. Консалтинг, HR, психология, социальная работа — области вашего потенциала. Вы отличный командный игрок. Ваша способность понимать потребности делает вас прекрасным переговорщиком. Вы не стремитесь к лидерству ради власти. Финансовая стабильность важна. Карьерный рост происходит через построение отношений. Вы предпочитаете работу которая приносит пользу.',
+        love: 'В любви вы ищете глубокую эмоциональную связь. Для вас важны нежные слова и забота. Вы не склонны к быстрым романам. Ваша преданность безгранична. Вы ищете партнёра который оценит чувствительность. Романтика — это глубокое соединение душ. В отношениях вы заботливый партнёр. Идеальный партнёр понимает вашу потребность в близости. Вы цените верность и честность.',
+        advice: 'Развивайте дипломатические навыки. Не бойтесь выражать потребности. Доверяйте интуиции. Находите баланс между заботой о других и о себе. Чувствительность — это дар. Учитесь устанавливать границы. Не позволяйте пользоваться добротой. Развивайте уверенность. Ваша способность понимать людей — преимущество. Создавайте гармонию без жертвенности. Не бойтесь конфликтов. Развивайте assertiveness. Помните что нельзя угодить всем.'
+    },
+    3: {
+        image: 'images/number3.png',
+        title: 'Число 3 — Творец и Оптимист',
+        history: 'Тройка — число творческой энергии. Пифагор называл её совершенным числом. В древних традициях ассоциировалась с триединым божеством. В христианстве символизирует Святую Троицу. В китайской философии представляет гармонию неба земли и человека. Древние египтяне связывали с тремя сезонами. В астрологии управляется Юпитером. Исторически символизировала рост и развитие. Многие художники и музыканты имели выраженную тройку. В таро соответствует Императрице.',
+        description: 'Вы — творческая личность с богатым воображением. Вам свойственны оптимизм, общительность и артистизм. Вы видите мир через призму красоты. Ваша способность выражать себя делает вас уникальным. Вы не любите рутину, постоянно ищете новые впечатления. Ваша энергия заразительна. Вы обладаете даром слова. Однако важно научиться фокусироваться. Ваша чувствительность к красоте делает вас ценителем искусства. Баланс между творчеством и дисциплиной — ключ к реализации.',
+        famous: 'Риз Уизерспун, Селена Гомес, Леди Гага, Сальвадор Дали, Пабло Пикассо, Моцарт, Шекспир, Марк Твен, Чарли Чаплин',
+        career: 'В карьере вы стремитесь к творческой работе. Артистическая деятельность, маркетинг, дизайн, писательство — области где вы блистаете. Ваша способность генерировать идеи делает вас ценным. Вы не любите жёсткие рамки. Финансовый успех приходит через признание таланта. Карьерный рост связан с расширением аудитории. Вы предпочитаете проекты где можно выразить индивидуальность.',
+        love: 'В любви вы ищете партнёра с которым можно делиться идеями. Вам важны романтика и внимание. Вы не любите скуку в отношениях. Ваша игривость делает вас привлекательным. Вы ищете человека который разделит любовь к искусству. В отношениях вы щедры на комплименты. Идеальный партнёр с творческим началом. Вы цените лёгкость и радость.',
+        advice: 'Развивайте творческие таланты. Не распыляйте энергию. Не бойтесь выражать себя. Доверяйте оптимизму. Находите баланс между творчеством и дисциплиной. Харизма — ваше преимущество. Учитесь доводить проекты до конца. Не бойтесь критики. Развивайте тайм-менеджмент. Помните что не все идеи нужно реализовывать. Ваша миссия — вдохновлять творчеством. Создавайте красоту. Будьте источником радости.'
+    },
+    4: {
+        image: 'images/number4.png',
+        title: 'Число 4 — Строитель и Практик',
+        history: 'Четвёрка символизирует стабильность и порядок. Во многих культурах ассоциируется с четырьмя стихиями. Четыре стороны света, четыре времени года. В китайской традиции число стабильности. Пифагорейцы называли числом справедливости. В каббале соответствует четвёртой сфире Хесед. Древние египтяне связывали с четырьмя сыновьями Гора. В астрологии управляется Ураном. Исторически символизировала труд и дисциплину. В таро соответствует Императору.',
+        description: 'Вы — надёжный и практичный человек. Вам свойственны трудолюбие, дисциплинированность и ответственность. Вы предпочитаете действовать по плану. Ваша способность создавать структуры делает вас организатором. Вы не боитесь тяжёлой работы. Ваша практичность иногда воспринимается как отсутствие воображения. Вы строите жизнь на твёрдом фундаменте. Ваша преданность семье безгранична. Однако важно научиться расслабляться. Баланс между работой и отдыхом — ключ к здоровью.',
+        famous: 'Бейонсе, Клинт Иствуд, Арнольд Шварценеггер, Харрисон Форд, Маргарет Тэтчер, Уоррен Баффет, Билл Гейтс',
+        career: 'В карьере вы цените стабильность. Строительство, инженерия, финансы, администрирование — области превосходства. Ваша способность работать системно делает вас незаменимым. Вы не стремитесь к быстрому успеху. Финансовая безопасность имеет первостепенное значение. Карьерный рост связан с накоплением опыта. Вы предпочитаете компании с чёткой структурой.',
+        love: 'В любви вы ищете стабильные отношения. Вы не склонны к быстрым романам. Ваша преданность безгранична. Вы выражаете любовь через действия. Вы ищете партнёра который разделит стремление к стабильности. В отношениях вы защитник. Идеальный партнёр ценит надёжность. Вы не любите драм.',
+        advice: 'Развивайте дисциплину. Не бойтесь работы. Создавайте прочные основы. Находите баланс между работой и отдыхом. Надёжность — ваше преимущество. Учитесь быть гибким. Не бойтесь делегировать. Развивайте планирование. Помните что перфекционизм замедляет прогресс. Ваша миссия — строить стабильность. Создавайте системы. Будьте тем на кого можно положиться.'
+    },
+    5: {
+        image: 'images/number5.png',
+        title: 'Число 5 — Искатель Приключений',
+        history: 'Пятёрка — число свободы и перемен. В древних традициях число человека (пять пальцев, пять чувств). Пифагорейцы называли числом брака. В китайской философии ассоциируется с пятью элементами. Древние египтяне связывали с пятью путями к загробной жизни. В астрологии управляется Меркурием. Исторически символизировала движение и изменение. Многие путешественники имели выраженную пятёрку. В каббале соответствует пятой сфире Гевура.',
+        description: 'Вы — любитель свободы и приключений. Вам свойственны любознательность, адаптивность и любовь к переменам. Вы постоянно ищете новые впечатления. Ваша способность адаптироваться делает вас выносливым. Вы не боитесь риска. Ваша энергия заразительна. Вы обладаете даром коммуникации. Однако важно научиться доводить начатое до конца. Ваша потребность в свободе иногда воспринимается как безответственность.',
+        famous: 'Анджелина Джоли, Марк Цукерберг, Авраам Линкольн, Брэд Питт, Стивен Спилберг, Уилл Смит, Мэрилин Монро',
+        career: 'В карьере вы нуждаетесь в разнообразии. Коммуникации, продажи, маркетинг, путешествия, журналистика — идеально подходит. Ваша способность быстро обучаться делает вас ценным. Вы не любите жёсткие графики. Финансовый успех приходит через разнообразие источников. Карьерный рост связан с расширением сферы влияния.',
+        love: 'В любви вы ищете партнёра который разделяет любовь к приключениям. Вам важно сохранять личное пространство. Вы не склонны к быстрому commitment. Ваша игривость делает отношения яркими. Вы ищете партнёра готового к экспериментам. В любви вы щедры на внимание.',
+        advice: 'Развивайте адаптивность. Не бойтесь нового опыта. Путешествуйте. Находите баланс между свободой и обязательствами. Любознательность — ваше преимущество. Учитесь доводить проекты до конца. Не бойтесь менять направление. Развивайте фокусировку. Помните что не все перемены полезны. Ваша миссия — исследовать мир.'
+    },
+    6: {
+        image: 'images/number6.png',
+        title: 'Число 6 — Хранитель и Защитник',
+        history: 'Шестёрка — число любви и заботы. В древних традициях ассоциировалась с семьёй и домом. Пифагорейцы называли совершенным числом (1+2+3=6). В китайской философии ассоциируется с небесной удачей. Древние египтяне связывали с шестью направлениями пространства. В астрологии управляется Венерой. В каббале соответствует шестой сфире Тиферет. Исторически символизировала ответственность и служение. В таро соответствуют Влюблённые.',
+        description: 'Вы — заботливый и ответственный человек. Семья и близкие всегда на первом месте. Вы создаёте уют и гармонию. Вам свойственны сострадание и щедрость. Ваша способность создавать комфортную атмосферу делает вас желанным гостем. Вы не боитесь брать ответственность. Ваша преданность безгранична. Вы обладаете прекрасным вкусом. Однако важно научиться заботиться о себе. Баланс между заботой о других и о себе — ключ к счастью.',
+        famous: 'Джонни Депп, Майкл Джексон, Мерил Стрип, Джон Леннон, Мать Тереза, Принцесса Диана, Нельсон Мандела',
+        career: 'В карьере вы стремитесь к работе которая приносит пользу. Медицина, образование, социальная работа, дизайн интерьеров, кулинария — ваше призвание. Ваша способность создавать комфорт делает вас ценным. Вы не стремитесь к власти. Финансовая стабильность важна. Карьерный рост связан с признанием экспертизы.',
+        love: 'В любви вы ищете серьёзные отношения ведущие к семье. Вы готовы вкладывать время и энергию. Ваша преданность безгранична. Вы выражаете любовь через заботу. Вы ищете партнёра который разделит семейные ценности. В отношениях вы заботливый партнёр.',
+        advice: 'Развивайте заботу без жертвенности. Не берите ответственность за всех. Создавайте гармонию. Находите баланс между заботой о себе и других. Ваша способность любить — преимущество. Учитесь говорить нет. Не бойтесь просить о помощи. Развивайте самопомощь. Помните что нельзя спасти всех. Ваша миссия — создавать уют.'
+    },
+    7: {
+        image: 'images/number7.png',
+        title: 'Число 7 — Мудрец и Философ',
+        history: 'Семёрка — число духовности и мудрости. Во многих религиях священное число. Пифагорейцы называли числом Афины. В христианстве символизирует семь дней творения. В китайской философии ассоциируется с семью звёздами Большой Медведицы. Древние египтяне связывали с семью путями к загробной жизни. В астрологии управляется Нептуном. В каббале соответствует седьмой сфире Нецах. Исторически символизировала поиск истины. В таро соответствует Колеснице.',
+        description: 'Вы — мыслитель и исследователь с аналитическим умом. Вам свойственны стремление к знаниям, любовь к уединению и поиск истины. Вы предпочитаете глубину поверхностности. Ваша интуиция развита сильно. Вы не боитесь одиночества. Ваша способность видеть за пределами очевидного делает вас аналитиком. Вы не доверяете поверхностным объяснениям. Однако важно научиться делиться знаниями. Баланс между уединением и общением — ключ к счастью.',
+        famous: 'Николь Кидман, Том Круз, Джулия Робертс, Дэвид Бекхэм, Исаак Ньютон, Альберт Эйнштейн, Стивен Хокинг',
+        career: 'В карьере вы стремитесь к исследовательской работе. Наука, исследования, IT, психология, философия, писательство — области превосходства. Ваша способность видеть закономерности делает вас ценным. Вы не любите поверхностную работу. Финансовый успех приходит через экспертизу. Карьерный рост связан с накоплением знаний.',
+        love: 'В любви вы ищете интеллектуальную связь. Вам важно чтобы партнёр понимал потребность в уединении. Вы не склонны к поверхностным отношениям. Ваша преданность безгранична. Вы ищете партнёра который разделит любовь к знаниям. В отношениях вы цените честность и глубину.',
+        advice: 'Развивайте интуицию. Не изолируйтесь. Доверяйте внутреннему знанию. Находите баланс между уединением и общением. Мудрость — ваше преимущество. Учитесь применять знания на практике. Не бойтесь выглядеть странно. Развивайте коммуникацию. Помните что не все готовы к глубоким разговорам. Ваша миссия — искать истину.'
+    },
+    8: {
+        image: 'images/number8.png',
+        title: 'Число 8 — Победитель и Лидер',
+        history: 'Восьмёрка — число успеха и изобилия. В древних традициях число баланса между материальным и духовным. Пифагорейцы называли числом справедливости. В китайской философии самое удачное число. Древние египтяне связывали с восемью первоначальными богами. В астрологии управляется Сатурном. В каббале соответствует восьмой сфире Ход. Исторически символизировала власть и успех. В таро соответствует Силе.',
+        description: 'Вы — человек успеха с талантом к управлению ресурсами. Вам свойственны амбициозность, решительность и деловая хватка. Вы понимаете законы материального мира. Ваша способность видеть возможности делает вас предпринимателем. Вы не боитесь ответственности. Ваша уверенность вдохновляет других. Вы цените качество. Однако важно помнить о балансе между материальным и духовным. Баланс между работой и личной жизнью — ключ к счастью.',
+        famous: 'Сандра Баллок, Кэмерон Диас, Уоррен Баффет, Билл Гейтс, Дональд Трамп, Опра Уинфри, Майкл Джордан',
+        career: 'В карьере вы стремитесь к лидерству и успеху. Бизнес, финансы, управление, инвестиции, недвижимость — области реализации. Ваша способность управлять ресурсами делает вас руководителем. Вы не боитесь риска. Финансовая независимость имеет первостепенное значение. Карьерный рост связан с расширением влияния.',
+        love: 'В любви вы ищете партнёра который разделяет амбиции. Вы готовы обеспечивать стабильность. Ваша преданность проявляется через действия. Вы ищете равного партнёра. В отношениях вы цените стабильность. Идеальный партнёр с собственными амбициями.',
+        advice: 'Развивайте деловые навыки. Не жертвуйте здоровьем ради успеха. Не бойтесь финансовой ответственности. Создавайте изобилие. Находите баланс между материальным и духовным. Амбициозность — ваше преимущество. Учитесь этичному бизнесу. Не бойтесь инвестировать в себя. Развивайте управление людьми. Помните что успех без здоровья не имеет ценности.'
+    },
+    9: {
+        image: 'images/number9.png',
+        title: 'Число 9 — Гуманист и Филантроп',
+        history: 'Девятка — число завершения и универсальной любви. В нумерологии самое духовное число. Пифагорейцы называли числом человека. В китайской философии ассоциируется с долголетием. Древние египтяне связывали с девятью богами. В астрологии управляется Марсом. В каббале соответствует девятой сфире Йесод. Исторически символизировала завершение и мудрость. Многие гуманитарии имели выраженную девятку. В таро соответствует Отшельнику.',
+        description: 'Вы — гуманист с большим сердцем. Благополучие других имеет первостепенное значение. Вам свойственны сострадание, щедрость и желание сделать мир лучше. Вы видите общую картину. Ваша способность сопереживать делает вас прекрасным другом. Вы не боитесь жертвовать интересами ради высших целей. Ваша мудрость делает вас ценным советчиком. Вы стремитесь к завершению начатого. Однако важно научиться заботиться о себе.',
+        famous: 'Брэд Питт, Хью Джекман, Гвинет Пэлтроу, Микеланджело, Мать Тереза, Нельсон Мандела, Махатма Ганди',
+        career: 'В карьере вы стремитесь к работе которая приносит пользу обществу. Благотворительность, образование, медицина, социальная работа, экология — ваше призвание. Ваша способность видеть общую картину делает вас стратегом. Вы не стремитесь к личному обогащению. Финансовый успех приходит через служение.',
+        love: 'В любви вы ищете партнёра который разделяет гуманистические ценности. Вы готовы поддерживать партнёра. Ваша преданность безгранична. Вы ищете отношения которые имеют глубокий смысл. В отношениях вы наставник и вдохновитель.',
+        advice: 'Развивайте сострадание. Не теряйте себя в служении. Не берите чужую карму. Завершайте начатые дела. Находите баланс между служением и заботой о себе. Ваша способность любить — преимущество. Учитесь отпускать. Не бойтесь завершать токсичные отношения. Развивайте самовосстановление. Помните что нельзя спасти всех. Ваша миссия — служить человечеству.'
+    }
+};
+
+// Functions
+function createParticles() {
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+        container.appendChild(particle);
+    }
+}
+
+function setCurrentDate() {
+    const now = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('currentDate').textContent = now.toLocaleDateString('ru-RU', options);
+}
+
+function showSection(sectionId) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(sectionId).classList.add('active');
+    if (event && event.target) {
+        event.target.classList.add('active');
+    }
+}
+
+function selectNumber(num) {
+    document.querySelectorAll('.number-card').forEach(c => c.classList.remove('selected'));
+    if (event && event.target) {
+        event.target.closest('.number-card').classList.add('selected');
+    }
+    const data = numberData[num];
+    if (data) {
+        document.getElementById('numberImage').src = data.image;
+        document.getElementById('numberTitle').textContent = data.title;
+        document.getElementById('numberHistory').textContent = data.history;
+        document.getElementById('numberDescription').textContent = data.description;
+        document.getElementById('famousPeople').textContent = data.famous;
+        document.getElementById('numberCareer').textContent = data.career;
+        document.getElementById('numberLove').textContent = data.love;
+        document.getElementById('numberAdvice').textContent = data.advice;
+        document.getElementById('numberResult').classList.add('active');
+        document.getElementById('numberResult').scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+function getZodiacSign(date) {
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const dateStr = `${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    for (const sign of zodiacSigns) {
+        if (sign.start <= sign.end) {
+            if (dateStr >= sign.start && dateStr <= sign.end) return sign;
+        } else {
+            if (dateStr >= sign.start || dateStr <= sign.end) return sign;
+        }
+    }
+    return zodiacSigns[0];
+}
+
+function calculateLifePath(date) {
+    const dateStr = date.toISOString().split('T')[0].replace(/-/g, '');
+    let sum = 0;
+    for (const char of dateStr) { sum += parseInt(char); }
+    while (sum > 9 && sum !== 11 && sum !== 22 && sum !== 33) {
+        sum = String(sum).split('').reduce((a, b) => a + parseInt(b), 0);
+    }
+    return sum;
+}
+
+function calculateNameNumber(name) {
+    let sum = 0;
+    for (const char of name.toLowerCase()) {
+        if (letterValues[char]) { sum += letterValues[char]; }
+    }
+    while (sum > 9 && sum !== 11 && sum !== 22 && sum !== 33) {
+        sum = String(sum).split('').reduce((a, b) => a + parseInt(b), 0);
+    }
+    return sum;
+}
+
+function getVowelsConsonants(name) {
+    const vowelsList = [], consonantsList = [];
+    for (const char of name.toLowerCase()) {
+        if (vowels.includes(char)) { vowelsList.push(char); }
+        else if (letterValues[char]) { consonantsList.push(char); }
+    }
+    return { vowels: vowelsList, consonants: consonantsList };
+}
+
+function generateHoroscope() {
+    const name = document.getElementById('horoscopeName').value;
+    const birthDate = document.getElementById('birthDate').value;
+    const birthTime = document.getElementById('birthTime').value;
+    if (!name || !birthDate) { alert('Пожалуйста, введите имя и дату рождения'); return; }
+    const date = new Date(birthDate);
+    const sign = getZodiacSign(date);
+    const lifePath = calculateLifePath(date);
+    const today = new Date();
+    document.getElementById('horoscopeUserName').textContent = name;
+    document.getElementById('horoscopeZodiac').textContent = `${sign.name} (${sign.element}) • Число пути: ${lifePath}`;
+    document.getElementById('zodiacImage').src = sign.image;
+    const predictions = generatePredictions(name, sign, lifePath, birthTime, today);
+    document.getElementById('dayGeneral').textContent = predictions.day.general;
+    document.getElementById('dayLove').textContent = predictions.day.love;
+    document.getElementById('dayWork').textContent = predictions.day.work;
+    document.getElementById('dayHealth').textContent = predictions.day.health;
+    document.getElementById('dayAdvice').textContent = predictions.day.advice;
+    document.getElementById('monthGeneral').textContent = predictions.month.general;
+    document.getElementById('monthWork').textContent = predictions.month.work;
+    document.getElementById('monthLove').textContent = predictions.month.love;
+    document.getElementById('monthTasks').textContent = predictions.month.tasks;
+    document.getElementById('yearGeneral').textContent = predictions.year.general;
+    document.getElementById('yearGoals').textContent = predictions.year.goals;
+    document.getElementById('yearWarning').textContent = predictions.year.warning;
+    document.getElementById('yearKarma').textContent = predictions.year.karma;
+    document.getElementById('personalityTraits').textContent = predictions.personality.traits;
+    document.getElementById('personalityStrengths').textContent = predictions.personality.strengths;
+    document.getElementById('personalityGrowth').textContent = predictions.personality.growth;
+    document.getElementById('personalityTalents').textContent = predictions.personality.talents;
+    document.getElementById('horoscopeResult').classList.add('active');
+    document.getElementById('horoscopeResult').scrollIntoView({ behavior: 'smooth' });
+}
+
+function generatePredictions(name, sign, lifePath, birthTime, today) {
+    return {
+        day: {
+            general: `Сегодня звёзды благоприятны для ${sign.name}. Энергия вселенной поддерживает начинания. Число пути ${lifePath} усиливает положительную энергию. ${birthTime ? 'Время рождения указывает на особую чувствительность.' : 'Прислушайтесь к интуиции — она сегодня сильна.'} Доверяйте внутреннему голосу. Космические силы на вашей стороне. Не бойтесь делать первые шаги. Энергия на высоком уровне. Вечер благоприятен для планирования. Усилия не пройдут даром.`,
+            love: 'В любви приятные сюрпризы. Харизма на пике. Одинокие могут встретить интересного человека. Для пар — день для углубления связи. Проявите нежность. Маленькие жесты ценны. Не бойтесь выражать чувства. Вечер идеален для свидания. Звёзды благоволят сердечным делам.',
+            work: 'В работе возможны важные события. Идеи будут услышаны. Финансы могут решиться в пользу. Благоприятен для новых проектов. Проявите инициативу. Компетентность будет замечена. Возможны новости о повышении. Коллеги поддержат. Вечер для планирования. Успех тем кто действует решительно.',
+            health: 'Энергетический уровень высокий — идеален для спорта. Прислушайтесь к телу. Обратите внимание на баланс работы и отдыха. Благоприятен для здорового образа жизни. Тело отзовётся на заботу. Медитация восстановит равновесие. Пейте воду. Вечер для расслабления. Самочувствие на высоте.',
+            advice: 'Совет: доверяйте интуиции. Обстоятельства складываются в пользу. Смотрите на общую картину. Терпение будет вознаграждено. Не бойтесь просить помощи. Окружите себя позитивом. Вечер для благодарности. Вы сильнее чем думаете. Доверяйте процессу. Вера в себя — ключ к успеху.'
+        },
+        month: {
+            general: `Месяц принесёт перемены. ${sign.name} под благоприятными аспектами. Число пути ${lifePath} резонирует с энергией месяца. Действуйте решительно. Космические силы поддерживают. Возможны встречи с важными людьми. Интуиция сильна в середине месяца. Доверяйте внутреннему компасу. Прогресс в личных делах.`,
+            work: 'Месяц для карьерного роста. Проявите инициативу в середине. Новые проекты имеют шансы. Финансы улучшатся. Возможны предложения о повышении. Коллеги поддержат. Не бойтесь ответственности. Репутация укрепится. Благоприятствует переговорам.',
+            love: 'Романтическая сфера активна. Одинокие встретят значимого человека. Для пар — месяц для углубления связи. Возможно важное событие. Проявите нежность. Жесты заботы ценны. Не бойтесь выражать чувства. Звёзды благоволят.',
+            tasks: 'Задачи: завершить проекты, наладить отношения, уделить внимание здоровью. Сосредоточьтесь на приоритетах. Время для обучения. Наведите порядок в финансах. Звёзды поддерживают дисциплину. Не откладывайте решения.'
+        },
+        year: {
+            general: `Год трансформации и роста. Вы заложите фундамент для достижений. ${sign.name} проходит важный цикл. Число пути ${lifePath} указывает на уроки. Доверяйте процессу. Космические силы поддерживают эволюцию. Возможны встречи. Интуиция сильна. Прогресс обещан.`,
+            goals: 'Цели: развитие навыков, укрепление отношений, здоровье. Сосредоточьтесь на долгосрочных проектах. Расширяйте кругозор. Укрепляйте финансовую базу. Звёзды поддерживают амбиции. Не бойтесь высоких целей. Настойчивость будет вознаграждена.',
+            warning: 'Обратите внимание на ретроградный Меркурий. Здоровье требует внимания. В отношениях сохраняйте баланс. Финансовые риски только после анализа. Звёзды предупреждают о осторожности. Доверяйте но проверяйте.',
+            karma: 'Кармические уроки: ответственность и баланс. Столкнётесь с ситуациями требующими зрелости. Прошлое может вернуться для исправления. Звёзды дают возможность исцелить раны. Доверяйте процессу. Учитесь на опыте. Душа растёт через испытания.'
+        },
+        personality: {
+            traits: `Как ${sign.name}, вы обладаете уникальными чертами. Стихия ${sign.element} влияет на взаимодействие. Число пути ${lifePath} добавляет нюансы. Вы сочетаете сильные стороны с мудростью опыта. Индивидуальность неповторима. Звёзды наделили дарами. Доверяйте природе.`,
+            strengths: 'Сильные стороны: интуиция, решительность, творчество, лидерство. Вы видите возможности где другие видят проблемы. Адаптируетесь к изменениям. Находите решения. Внутренняя сила помогает преодолевать. Звёзды поддерживают таланты.',
+            growth: 'Зоны роста: терпение, баланс работы и отдыха, открытость новому. Научитесь делегировать. Развивайте эмоциональный интеллект. Практикуйте осознанность. Звёзды помогают в самосовершенствовании.',
+            talents: 'Таланты: творчество, лидерство, помощь людям. Вы видите общую картину. Вдохновляете других. Интуиция — мощный инструмент. Доверяйте способностям. Звёзды раскроют потенциал.'
+        }
+    };
+}
+
+function showHoroscopeTab(tab) {
+    document.querySelectorAll('.horoscope-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.horoscope-section').forEach(s => s.classList.remove('active'));
+    if (event && event.target) {
+        event.target.classList.add('active');
+    }
+    document.getElementById(tab + 'Section').classList.add('active');
+}
+
+function calculateCompatibility() {
+    const name1 = document.getElementById('compatName1').value;
+    const name2 = document.getElementById('compatName2').value;
+    const date1 = document.getElementById('compatDate1').value;
+    const date2 = document.getElementById('compatDate2').value;
+    if (!name1 || !name2 || !date1 || !date2) { alert('Пожалуйста, заполните все поля'); return; }
+    const score = Math.floor(Math.random() * 40) + 60;
+    document.getElementById('scoreValue').textContent = score + '%';
+    document.getElementById('scoreCircle').style.background = `conic-gradient(#a855f7 ${score * 3.6}deg, #6366f1 0deg)`;
+    document.getElementById('compatNames').textContent = `${name1} & ${name2}`;
+    document.getElementById('compatLove').textContent = `Любовная совместимость ${score}% — ${score > 80 ? 'очень высокая' : score > 70 ? 'высокая' : 'хорошая'} гармония. Вы дополняете друг друга. Различия обогащают отношения. Находите компромиссы. Эмоциональная связь глубокая. Понимаете потребности. Звёзды благоприятствуют союзу. Доверяйте и развивайте отношения. Общие ценности укрепляют связь. Уважение друг к другу растёт. Взаимная поддержка помогает преодолевать трудности. Вместе вы сильнее чем по отдельности.`;
+    document.getElementById('compatFriend').textContent = 'Дружеская совместимость высокая — понимаете с полуслова. Интересно вместе. Уважаете границы. Дружба основана на доверии. Поддерживаете в трудные времена. Общие интересы укрепляют связь. Звёзды благословляют дружбу. Можете положиться друг на друга. Время вместе всегда приятно. Дружба будет долгой.';
+    document.getElementById('compatBusiness').textContent = 'Деловое партнёрство перспективно. Дополняете профессионально. Навыки создают синергию. Распределите роли чётко. Достигнете результатов вместе. Доверие и открытость — ключ. Звёзды поддерживают сотрудничество. Возможны общие проекты. Финансовый успех вероятен. Партнёрство будет выгодным.';
+    document.getElementById('compatAdvice').textContent = 'Практикуйте открытое общение. Уважайте различия. Уделяйте качественное время. Выражайте благодарность. Работайте над отношениями. Не принимайте как должное. Звёзды поддерживают при усилиях. Слушайте друг друга. Ищите компромиссы. Цените что имеете.';
+    document.getElementById('compatKarma').textContent = 'Встреча не случайна — кармическая связь. Учитесь друг у друга. Обратите внимание на повторяющиеся темы. Прошлое влияет на взаимодействия. Звёзды указывают на духовную связь. Встреча предназначена для роста. Уроки важны для обоих. Карма связывает вас.';
+    document.getElementById('compatFuture').textContent = 'Перспективы зависят от готовности работать. При уважении создадите крепкий союз. Общие цели — фундамент счастья. Построите прекрасное будущее. Звёзды благоприятствуют долгосрочному союзу. Доверяйте и развивайте любовь. Вместе пройдёте через всё. Будущее светло.';
+    document.getElementById('compatibilityResult').classList.add('active');
+    document.getElementById('compatibilityResult').scrollIntoView({ behavior: 'smooth' });
+}
+
+function generatePersonality() {
+    const name = document.getElementById('personalityName').value;
+    const birthDate = document.getElementById('personalityDate').value;
+    const birthTime = document.getElementById('personalityTime').value;
+    if (!name || !birthDate) { alert('Пожалуйста, введите имя и дату рождения'); return; }
+    const date = new Date(birthDate);
+    const sign = getZodiacSign(date);
+    const lifePath = calculateLifePath(date);
+    const soulNum = calculateNameNumber(name);
+    document.getElementById('personalityUserName').textContent = name;
+    document.getElementById('lifePathNum').textContent = lifePath;
+    document.getElementById('lifePathDesc').textContent = getLifePathDesc(lifePath);
+    document.getElementById('soulNum').textContent = soulNum;
+    document.getElementById('soulDesc').textContent = 'Число души отражает внутренние желания и мотивацию.';
+    document.getElementById('personalityNum').textContent = (lifePath + soulNum) % 9 || 9;
+    document.getElementById('personalityNumDesc').textContent = 'Число личности показывает как вас воспринимают.';
+    document.getElementById('destinyNum').textContent = calculateLifePath(date);
+    document.getElementById('destinyDesc').textContent = 'Число судьбы указывает на жизненную миссию.';
+    const traits = [
+        { icon: '🎯', title: 'Мотивация', desc: `Мотивация связана с числом пути ${lifePath}. Определяет темы и уроки жизни. Стремитесь к самореализации через цели резонирующие с природой. Понимание мотивации помогает принимать решения. Вы знаете чего хотите. Внутренний компас направляет.` },
+        { icon: '💡', title: 'Мышление', desc: 'Сочетаете аналитический подход с интуицией. Обрабатываете много информации. Выделяете главное. Интуиция подсказывает верные решения. Ум открыт для новых идей. Мыслите нестандартно. Находите неочевидные связи. Логика и интуиция в балансе.' },
+        { icon: '❤️', title: 'Эмоции', desc: 'Эмоциональный мир глубок. Скрываете чувства. Переживаете интенсивно. Обрабатываете наедине. Чувствительность — дар для понимания других. Эмоциональный интеллект помогает в отношениях. Учитесь выражать чувства. Баланс важен.' },
+        { icon: '🤝', title: 'Общение', desc: 'Избирательны в общении. Цените качество выше количества. Предпочитаете глубокие связи. Социальная энергия ограничена. Восстанавливайтесь в одиночестве. Настоящие друзья ценят искренность. Круг близких невелик но надёжен.' },
+        { icon: '🌟', title: 'Таланты', desc: 'Таланты: лидерство, творчество, вдохновение. Уникальное сочетание навыков. Экспериментируйте. Ищите призвание. Таланты предназначены для служения миру. Развивайте их постоянно. Делитесь с другими.' },
+        { icon: '🔮', title: 'Духовность', desc: birthTime ? 'Интуиция очень развита. Чувствуете энергии людей. Духовные практики усилят способности. Доверяйте внутреннему голосу.' : 'Интуиция развита хорошо. Усиливается с практикой. Чувствуете энергии. Медитация усилит. Развивайте духовную сторону.' }
+    ];
+    document.getElementById('personalityGrid').innerHTML = traits.map(t => `
+        <div class="trait-card">
+            <div class="trait-icon">${t.icon}</div>
+            <div class="trait-title">${t.title}</div>
+            <div class="trait-description">${t.desc}</div>
+        </div>
+    `).join('');
+    document.getElementById('personalityResult').classList.add('active');
+    document.getElementById('personalityResult').scrollIntoView({ behavior: 'smooth' });
+}
+
+function getLifePathDesc(num) {
+    const descs = {
+        1: 'Путь лидера. Научитесь независимости и ведению других.',
+        2: 'Путь дипломата. Миссия — создавать гармонию и сотрудничать.',
+        3: 'Путь творца. Вы здесь чтобы выражать себя и вдохновлять.',
+        4: 'Путь строителя. Задача — создавать прочные основы.',
+        5: 'Путь искателя. Пришли испытать разнообразие жизни.',
+        6: 'Путь хранителя. Миссия — заботиться о других.',
+        7: 'Путь мудреца. Здесь чтобы искать глубинные знания.',
+        8: 'Путь лидера в материальном. Задача — достичь успеха.',
+        9: 'Путь гуманиста. Пришли служить человечеству.'
+    };
+    return descs[num] || '';
+}
+
+function analyzeName() {
+    const surname = document.getElementById('surnameInput').value.trim();
+    const name = document.getElementById('nameInput').value.trim();
+    const patronymic = document.getElementById('patronymicInput').value.trim();
+    if (!surname || !name || !patronymic) { alert('Пожалуйста, введите фамилию, имя и отчество'); return; }
+    const fullName = `${surname} ${name} ${patronymic}`;
+    document.getElementById('fullNameDisplay').textContent = fullName;
+    const allLetters = (surname + name + patronymic).toLowerCase();
+    document.getElementById('letterBreakdown').innerHTML = allLetters.split('').map(char => {
+        const value = letterValues[char] || 0;
+        return `<div class="letter-card"><div class="letter-display">${char.toUpperCase()}</div><div class="letter-value">${value > 0 ? value : '-'}</div></div>`;
+    }).join('');
+    const { vowels: vowelList, consonants: consonantList } = getVowelsConsonants(allLetters);
+    document.getElementById('vowelList').textContent = vowelList.join(', ').toUpperCase() || 'Нет гласных';
+    document.getElementById('consonantList').textContent = consonantList.join(', ').toUpperCase() || 'Нет согласных';
+    const nameNum = calculateNameNumber(name);
+    const surnameNum = calculateNameNumber(surname);
+    const patronymicNum = calculateNameNumber(patronymic);
+    const fullNameNum = calculateNameNumber(fullName);
+    document.getElementById('nameNumber').textContent = nameNum;
+    document.getElementById('nameNumberDesc').textContent = getNameNumberDesc(nameNum);
+    document.getElementById('surnameNumber').textContent = surnameNum;
+    document.getElementById('surnameNumberDesc').textContent = getNameNumberDesc(surnameNum);
+    document.getElementById('patronymicNumber').textContent = patronymicNum;
+    document.getElementById('patronymicNumberDesc').textContent = getNameNumberDesc(patronymicNum);
+    document.getElementById('fullNameNumber').textContent = fullNameNum;
+    document.getElementById('fullNameNumberDesc').textContent = getNameNumberDesc(fullNameNum);
+    document.getElementById('vowelAnalysis').textContent = getVowelAnalysis(vowelList);
+    document.getElementById('consonantAnalysis').textContent = getConsonantAnalysis(consonantList);
+    document.getElementById('nameCharacteristic').textContent = getNameCharacteristic(name, nameNum);
+    document.getElementById('surnameCharacteristic').textContent = `Фамилия "${surname}" с числом ${surnameNum} указывает на родовые программы и семейные паттерны которые передаются из поколения в поколение. Она влияет на восприятие в обществе и профессиональной среде создавая первое впечатление. Фамилия несёт энергию предков и их опыт включая достижения и возможные кармические долги рода. Это связь с прошлым которая может помогать или ограничивать в зависимости от осознанности. Анализ фамилии позволяет понять какие семейные программы вы несёте и какие стоит трансформировать. Число фамилии показывает как воспринимают в официальной обстановке. Это социальная маска. Фамилия указывает на унаследованные качества и задачи рода которые должны решить именно вы. Понимание энергии фамилии помогает осознать корни и использовать родовую силу. Некоторые фамилии несут программы успеха другие — преодоления трудностей. Задача — осознать энергию и использовать во благо.`;
+    document.getElementById('patronymicCharacteristic').textContent = `Отчество "${patronymic}" с числом ${patronymicNum} отражает связь с отцовской линией рода и передаёт качества от отца к ребёнку. Оно влияет на социальную идентичность и статус показывая положение в обществе. Отчество показывает как проявляетесь в официальной среде и как воспринимают коллеги. Это мост между поколениями связывающий с наследием отца. Отчество несёт программы мужской линии рода включая качества достижения и кармические задачи. Анализ позволяет понять какие качества унаследовали от отца и как они влияют на жизнь. Число отчества показывает способность к социальной адаптации и построению связей. Отчество указывает на ожидания общества в связи с происхождением. Понимание энергии помогает осознать социальную роль и использовать для достижения целей. Некоторые отчества несут программы лидерства другие — служения. Задача — осознать энергию и использовать для реализации потенциала. Отчество влияет на отношения с авторитетными фигурами.`;
+    document.getElementById('fullCharacteristic').textContent = `Полное имя "${fullName}" с числом ${fullNameNum} создаёт уникальный энергетический отпечаток личности определяющий судьбу и жизненный путь. Ваше имя — ключ к пониманию судьбы оно влияет на все сферы жизни включая карьеру отношения и здоровье. Полное имя сочетает энергию фамилии имени и отчества создавая уникальный вибрационный код. Этот код определяет как взаимодействуете с миром и как мир с вами. Анализ позволяет понять сильные и слабые стороны выявить скрытые таланты и потенциал. Число полного имени показывает общую жизненную задачу и миссию в этом воплощении. Понимание энергии помогает осознать предназначение и двигаться в правильном направлении. Имя влияет на то как воспринимают окружающие и какие возможности открываются. Некоторые имена несут программы успеха другие — преодоления трудностей. Задача — осознать энергию полного имени и использовать для достижения целей. Полное имя указывает на кармические задачи которые должны решить в этой жизни.`;
+    document.getElementById('karmicMeaning').textContent = getKarmicMeaning(fullName, fullNameNum);
+    document.getElementById('nameAdvice').textContent = getNameAdvice(fullName, fullNameNum);
+    document.getElementById('nameAnalysisResult').classList.add('active');
+    document.getElementById('nameAnalysisResult').scrollIntoView({ behavior: 'smooth' });
+}
+
+function getNameNumberDesc(num) {
+    const descs = {
+        1: 'Независимость, лидерство, оригинальность.',
+        2: 'Гармония, партнёрство, дипломатия.',
+        3: 'Творчество, самовыражение, оптимизм.',
+        4: 'Стабильность, порядок, практичность.',
+        5: 'Свобода, перемены, приключения.',
+        6: 'Забота, ответственность, семья.',
+        7: 'Мудрость, анализ, духовность.',
+        8: 'Успех, власть, изобилие.',
+        9: 'Гуманизм, завершение, любовь.'
+    };
+    return descs[num] || '';
+}
+
+function getVowelAnalysis(vowels) {
+    const count = vowels.length;
+    if (count === 0) return 'В имени нет гласных — это редко. Может указывать на замкнутость.';
+    const unique = [...new Set(vowels)];
+    let analysis = `В имени ${count} гласных (${unique.join(', ').toUpperCase()}) — ${count > 5 ? 'открытость и общительность вы легко идёте на контакт и быстро заводите знакомства' : count > 3 ? 'баланс в выражении эмоций умеете быть открытым когда нужно и сохранять границы когда необходимо' : 'сдержанность в чувствах предпочитаете не показывать эмоции напоказ и тщательно выбираете кому доверять'}. `;
+    if (vowels.includes('а')) analysis += 'А — активная позиция стремление к действию не любите сидеть сложа руки. ';
+    if (vowels.includes('е')) analysis += 'Е — свободолюбие и независимость цените личную свободу. ';
+    if (vowels.includes('и')) analysis += 'И — духовность и стремление к знаниям постоянно ищете смысл. ';
+    if (vowels.includes('о')) analysis += 'О — творчество и самовыражение обладаете художественным вкусом. ';
+    if (vowels.includes('у')) analysis += 'У — интуиция и глубина чувств чувствуете то что другие не замечают. ';
+    if (vowels.includes('ы')) analysis += 'Ы — практичность и земная мудрость видите реальное положение дел. ';
+    if (vowels.includes('э')) analysis += 'Э — оригинальность и нестандартное мышление видите мир иначе. ';
+    if (vowels.includes('ю')) analysis += 'Ю — мечтательность и идеализм верите в лучшее будущее. ';
+    if (vowels.includes('я')) analysis += 'Я — самосознание и индивидуальность знаете кто вы. ';
+    return analysis + 'Гласные отражают внутренний мир и истинные желания души показывая что действительно важно в глубине сердца.';
+}
+
+function getConsonantAnalysis(consonants) {
+    const count = consonants.length;
+    if (count === 0) return 'В имени нет согласных — это крайне редко.';
+    const unique = [...new Set(consonants)];
+    let analysis = `В имени ${count} согласных (${unique.join(', ').toUpperCase()}) — ${count > 7 ? 'сильная воля и решительность умеете настаивать на своём и добиваться целей несмотря на препятствия' : count > 4 ? 'баланс в проявлении умеете быть настойчивым когда нужно и гибким когда необходимо' : 'мягкость в характере предпочитаете действовать через убеждение а не через давление'}. `;
+    if (consonants.includes('р')) analysis += 'Р — энергичность и напористость обладаете внутренней силой. ';
+    if (consonants.includes('л')) analysis += 'Л — творчество и артистизм обладаете художественным вкусом. ';
+    if (consonants.includes('м')) analysis += 'М — заботливость и чувствительность умеете сопереживать. ';
+    if (consonants.includes('н')) analysis += 'Н — независимость и свобода цените личную свободу. ';
+    if (consonants.includes('т')) analysis += 'Т — трудолюбие и целеустремлённость умеете работать. ';
+    if (consonants.includes('к')) analysis += 'К — коммуникабельность легко находите общий язык. ';
+    if (consonants.includes('с')) analysis += 'С — сила воли и самодисциплина умеете контролировать себя. ';
+    if (consonants.includes('в')) analysis += 'В — жизненная сила обладаете внутренней энергией. ';
+    if (consonants.includes('д')) analysis += 'Д — доброта и щедрость умеете делиться. ';
+    return analysis + 'Согласные отражают внешнее проявление и природные таланты показывая как взаимодействуете с окружающим миром.';
+}
+
+function getNameCharacteristic(name, num) {
+    const chars = {
+        1: `Имя "${name}" несёт энергию лидерства и независимости. Вы обладаете сильной волей и решительностью. Ваше имя привлекает внимание и уважение. Вы способны вести за собой людей и вдохновлять примером. Люди видят в вас лидера даже когда не стремитесь к этой роли. Имя даёт внутреннюю силу для преодоления препятствий. Не боитесь брать ответственность и принимать сложные решения. Имя помогает проявлять инициативу. Окружающие доверяют и обращаются за советом. Имя несёт энергию первопроходца и новатора.`,
+        2: `Имя "${name}" несёт энергию гармонии и сотрудничества. Вы обладаете даром дипломата и миротворца. Имя вызывает доверие и симпатию. Умеете находить компромиссы и сглаживать конфликты. Люди чувствуют себя комфортно в присутствии. Имя помогает устанавливать глубокие эмоциональные связи. Обладаете тонкой интуицией и понимаете людей без слов. Имя даёт способность создавать гармонию вокруг. Окружающие ценят тактичность и умение слушать. Имя несёт энергию партнёрства и взаимопонимания.`,
+        3: `Имя "${name}" несёт энергию творчества и самовыражения. Вы обладаете артистическими способностями и оптимизмом. Имя легко запоминается и вызывает положительные эмоции. Умеете вдохновлять других энтузиазмом. Люди тянутся к вам чувствуя позитивную энергию. Имя помогает выражать себя через творчество. Обладаете даром слова и умеете убеждать. Имя даёт способность видеть красоту в обычном. Окружающие ценят оптимизм и чувство юмора. Имя несёт энергию радости и вдохновения.`,
+        4: `Имя "${name}" несёт энергию стабильности и надёжности. Вы практичны и ответственны в делах. Имя вызывает доверие и ощущение безопасности. Умеете создавать прочные основы для будущего. Люди знают что на вас можно положиться. Имя помогает систематизировать и организовывать. Обладаете терпением для долгосрочных проектов. Имя даёт способность видеть практическую сторону. Окружающие ценят надёжность и последовательность. Имя несёт энергию порядка и дисциплины.`,
+        5: `Имя "${name}" несёт энергию свободы и перемен. Вы любознательны и адаптивны к изменениям. Имя ассоциируется с динамикой и движением вперёд. Не боитесь риска и готовы пробовать новое. Люди видят в вас человека который не стоит на месте. Имя помогает быстро адаптироваться к новым обстоятельствам. Обладаете даром коммуникации и находите общий язык. Имя даёт способность видеть возможности в переменах. Окружающие ценят открытость и готовность к новому. Имя несёт энергию приключений и исследований.`,
+        6: `Имя "${name}" несёт энергию заботы и ответственности. Вы семейны и преданны близким. Имя вызывает ощущение тепла и уюта. Умеете создавать комфортную атмосферу вокруг. Люди чувствуют себя защищёнными в присутствии. Имя помогает заботиться о тех кто в этом нуждается. Обладаете способностью создавать гармонию в семье. Имя даёт чувство ответственности за близких. Окружающие ценят заботу и готовность помочь. Имя несёт энергию любви и служения.`,
+        7: `Имя "${name}" несёт энергию мудрости и глубины. Вы аналитичны и духовно развиты. Имя ассоциируется с интеллектом и знаниями. Постоянно ищете истину и глубинный смысл. Люди видят в вас человека с глубоким внутренним миром. Имя помогает анализировать и понимать сложные вещи. Обладаете способностью видеть за пределами очевидного. Имя даёт потребность в уединении для размышлений. Окружающие ценят мудрость и глубину суждений. Имя несёт энергию поиска и познания.`,
+        8: `Имя "${name}" несёт энергию успеха и достижений. Вы амбициозны и целеустремлённы. Имя вызывает уважение и признание в деловых кругах. Умеете управлять ресурсами и достигать материальных целей. Люди видят в вас человека способного добиться успеха. Имя помогает проявлять деловые качества. Обладаете способностью видеть возможности для роста. Имя даёт уверенность в своих силах. Окружающие ценят решительность и эффективность. Имя несёт энергию власти и изобилия.`,
+        9: `Имя "${name}" несёт энергию гуманизма и служения. Вы сострадательны и щедры к другим. Имя ассоциируется с мудростью и духовностью. Стремитесь сделать мир лучше для всех. Люди видят в вас человека с большим сердцем. Имя помогает видеть общую картину и понимать связь всего. Обладаете способностью жертвовать интересами ради высших целей. Имя даёт мудрость и жизненный опыт. Окружающие ценят щедрость и готовность помочь. Имя несёт энергию универсальной любви и завершения.`
+    };
+    return chars[num] || '';
+}
+
+function getKarmicMeaning(fullName, num) {
+    const meanings = {
+        1: 'Кармическая задача: научиться независимости и лидерству не подавляя других. Найдите баланс между самостоятельностью и сотрудничеством. Душа пришла научиться вести за собой и вдохновлять примером. В прошлых воплощениях могли быть слишком зависимы или слишком доминировать. В этой жизни нужно найти золотую середину. Учитесь брать ответственность за себя и тех кто идёт за вами. Карма связана с развитием воли и способности принимать решения. Не бойтесь быть первым но помните о тех кто рядом. Задача — стать лидером который вдохновляет а не подавляет. Доверяйте интуиции и внутреннему голосу. Душа пришла научиться самостоятельности и уверенности.',
+        2: 'Кармическая задача: научиться гармонии и партнёрству без потери себя. Создайте здоровые равноправные отношения. Душа пришла научиться сотрудничеству и дипломатии. В прошлых воплощениях могли быть слишком зависимы или изолированы. В этой жизни нужно найти баланс между отдачей и получением. Учитесь говорить о потребностях и устанавливать границы. Карма связана с развитием эмпатии и способности понимать других. Не бойтесь конфликтов но и не ищите их. Задача — стать миротворцем который создаёт гармонию. Доверяйте интуиции она редко подводит. Душа пришла научиться равновесию и взаимопониманию.',
+        3: 'Кармическая задача: научиться творческому самовыражению authentically. Найдите способ выразить себя без страха. Душа пришла радовать мир творчеством и вдохновением. В прошлых воплощениях могли подавлять творческий потенциал или использовать во вред. В этой жизни нужно раскрыть дар и поделиться с миром. Учитесь не бояться критики и выражать себя свободно. Карма связана с развитием креативности и оптимизма. Не бойтесь быть в центре внимания если это служит миссии. Задача — стать источником радости и вдохновения. Доверяйте творческому импульсу. Душа пришла научиться самовыражению и радости жизни.',
+        4: 'Кармическая задача: научиться стабильности и дисциплине без ригидности. Создайте прочные основы для будущего. Душа пришла научиться строить надёжное и долговечное. В прошлых воплощениях могли быть слишком хаотичны или слишком жестки. В этой жизни нужно найти баланс между стабильностью и гибкостью. Учитесь планировать но оставляйте место для неожиданностей. Карма связана с развитием трудолюбия и ответственности. Не бойтесь тяжёлой работы но и не забывайте об отдыхе. Задача — стать тем на кого можно положиться. Доверяйте процессу и не торопите. Душа пришла научиться терпению и построению фундамента.',
+        5: 'Кармическая задача: научиться свободе с ответственностью за действия. Найдите баланс между свободой и обязательствами. Душа пришла испытать жизнь во всём разнообразии. В прошлых воплощениях могли быть слишком ограничены или безответственны. В этой жизни нужно научиться использовать свободу мудро. Учитесь брать обязательства но не теряйте любви к приключениям. Карма связана с развитием адаптивности и любознательности. Не бойтесь перемен но и не меняйте направление без причины. Задача — стать исследователем который открывает новые пути. Доверяйте внутреннему компасу. Душа пришла научиться свободе и ответственности.',
+        6: 'Кармическая задача: научиться заботе без жертвенности и созависимости. Найдите баланс между заботой о себе и других. Душа пришла научиться любить и создавать гармонию. В прошлых воплощениях могли быть слишком жертвенны или эгоистичны. В этой жизни нужно найти баланс между отдачей и получением. Учитесь заботиться о себе так же как о других. Карма связана с развитием чувства ответственности за семью. Не бойтесь говорить нет когда необходимо. Задача — стать хранителем который создаёт уют и безопасность. Доверяйте сердцу но не забывайте о разуме. Душа пришла научиться безусловной любви и заботе.',
+        7: 'Кармическая задача: научиться мудрости и доверию к жизни. Найдите баланс между уединением и общением. Душа пришла искать истину и делиться мудростью. В прошлых воплощениях могли быть слишком изолированы или поверхностны. В этой жизни нужно найти баланс между уединением и общением. Учитесь делиться знаниями с теми кто готов принять. Карма связана с развитием интуиции и духовного понимания. Не бойтесь выглядеть странно если следуете пути. Задача — стать мудрецом который освещает путь другим. Доверяйте внутреннему знанию. Душа пришла научиться мудрости и духовному росту.',
+        8: 'Кармическая задача: научиться балансу материального и духовного. Создайте изобилие во всех сферах жизни. Душа пришла достичь успеха и использовать во благо. В прошлых воплощениях могли быть слишком привязаны к материальному или оторваны от реальности. В этой жизни нужно найти баланс между материальным и духовным. Учитесь использовать деньги и власть для позитивных изменений. Карма связана с развитием деловых качеств и ответственности за ресурсы. Не бойтесь успеха но и не забывайте о духовных ценностях. Задача — стать лидером который создаёт изобилие для себя и других. Доверяйте способности управлять ресурсами. Душа пришла научиться изобилию и ответственности.',
+        9: 'Кармическая задача: научиться универсальной любви и состраданию. Завершите кармические циклы и служите миру. Душа пришла служить человечеству и завершать циклы. В прошлых воплощениях могли быть слишком привязаны к личному или отстранены. В этой жизни нужно найти баланс между личным и универсальным. Учитесь служить другим не теряя себя. Карма связана с развитием сострадания и способности видеть общую картину. Не бойтесь отпускать то что отжило. Задача — стать гуманистом который служит миру примером. Доверяйте большому сердцу. Душа пришла научиться универсальной любви и завершению.'
+    };
+    return meanings[num] || '';
+}
+
+function getNameAdvice(fullName, num) {
+    const advices = {
+        1: 'Развивайте лидерские качества но учитесь слушать других. Не бойтесь инициативы в важных делах. Доверяйте интуиции при принятии решений. Сила — в уверенности и решительности. Находите баланс между независимостью и сотрудничеством. Помните что лидеру нужна поддержка команды. Развивайте эмоциональный интеллект для понимания людей. Не подавляйте других сильной волей. Учитесь делегировать задачи и доверять коллегам. Миссия — вдохновлять примером. Создавайте новые пути где другие видят препятствия. Будьте первопроходцем. Не бойтесь идти против течения. Оригинальность — главное преимущество. Развивайте терпение к тем кто мыслит медленнее. Помните о балансе между работой и отдыхом. Заботьтесь о здоровье не меньше чем о карьере. Энергия заразительна — используйте мудро. Окружайте себя позитивными людьми. Верьте в себя даже когда другие сомневаются. Уверенность вдохновляет других на достижения.',
+        2: 'Развивайте дипломатические навыки и учитесь выражать потребности. Не бойтесь говорить о том что важно. Доверяйте интуиции — она редко ошибается. Находите баланс между заботой о других и о себе. Чувствительность — это дар а не слабость. Учитесь устанавливать здоровые границы. Не позволяйте пользоваться добротой. Развивайте уверенность в себе и решениях. Способность понимать людей — уникальное преимущество. Создавайте гармонию без жертвенности. Слушайте внутренний голос при решениях. Не бойтесь конфликтов — иногда они необходимы. Развивайте assertiveness для защиты интересов. Помните что нельзя угодить всем. Миссия — создавать мосты между людьми. Будьте миротворцем но не забывайте о себе. Развивайте эмоциональную устойчивость к стрессу. Окружайте себя людьми которые ценят чувствительность. Практикуйте медитацию для баланса. Верьте в способность решать конфликты. Гармония вдохновляет других на мир.',
+        3: 'Развивайте творческие таланты и не распыляйте энергию. Не бойтесь выражать себя authentically через искусство. Доверяйте оптимизму даже в трудные времена. Находите баланс между творчеством и дисциплиной. Харизма — главное преимущество в жизни. Учитесь доводить проекты до завершения. Не бойтесь критики — она помогает расти. Развивайте тайм-менеджмент для продуктивности. Помните что не все идеи нужно реализовывать. Миссия — вдохновлять творчеством. Создавайте красоту где другие видят обыденность. Будьте источником радости и позитива. Не бойтесь экспериментировать с новыми формами. Развивайте профессиональные навыки в выбранной области. Помните о балансе между весельем и ответственностью. Заботьтесь о ментальном здоровье. Окружайте себя творческими людьми. Практикуйте благодарность за таланты. Верьте в способность изменить мир через творчество. Не сравнивайте себя с другими — путь уникален. Творчество вдохновляет других на самовыражение.',
+        4: 'Развивайте дисциплину и не бойтесь тяжёлой работы. Не бойтесь брать ответственность за проекты. Создавайте прочные основы для будущего поколения. Находите баланс между работой и отдыхом регулярно. Надёжность — главное преимущество в карьере. Учитесь быть гибким в непредвиденных ситуациях. Не бойтесь делегировать задачи доверенным людям. Развивайте планирование для эффективности. Помните что перфекционизм может замедлять прогресс. Миссия — строить стабильность для себя и других. Создавайте системы которые работают долгие годы. Будьте тем на кого всегда можно положиться. Не бойтесь традиционных методов работы. Развивайте терпение к долгосрочным проектам. Помните о балансе между стабильностью и развитием. Заботьтесь о здоровье несмотря на занятость. Окружайте себя надёжными людьми. Практикуйте благодарность за стабильность. Верьте в способность создавать долговечные ценности. Не бойтесь медленного но уверенного прогресса. Надёжность вдохновляет других на ответственность.',
+        5: 'Развивайте адаптивность и не бойтесь нового опыта. Не бойтесь выходить из зоны комфорта регулярно. Путешествуйте и расширяйте горизонты постоянно. Находите баланс между свободой и обязательствами. Любознательность — главное преимущество в жизни. Учитесь доводить важные проекты до завершения. Не бойтесь менять направление при необходимости. Развивайте фокусировку на приоритетах. Помните что не все перемены полезны. Миссия — исследовать мир и вдохновлять других. Создавайте новые возможности через контакты. Будьте источником свежих идей. Не бойтесь рисковать в разумных пределах. Развивайте финансовую грамотность для стабильности. Помните о балансе между приключениями и безопасностью. Заботьтесь о здоровье во время путешествий. Окружайте себя открытыми людьми. Практикуйте благодарность за новые возможности. Верьте в способность адаптироваться к любым условиям. Не бойтесь менять работу ради нового опыта. Свобода вдохновляет других на перемены.',
+        6: 'Развивайте заботу без жертвенности и созависимости. Не берите ответственность за всех вокруг. Создавайте гармонию в семье и на работе. Находите баланс между заботой о себе и других. Способность любить — главное преимущество. Учитесь говорить нет когда необходимо. Не бойтесь просить о помощи когда нужно. Развивайте самопомощь и самовосстановление. Помните что нельзя спасти всех людей. Миссия — создавать уют и безопасность для близких. Создавайте дом полный любви и понимания. Будьте опорой для тех кто в этом нуждается. Не бойтесь выражать потребности партнёру. Развивайте личные интересы вне семьи. Помните о балансе между отдачей и получением. Заботьтесь о здоровье не меньше чем о других. Окружайте себя людьми которые ценят заботу. Практикуйте благодарность за возможность помогать. Верьте в способность создавать гармоничные отношения. Не бойтесь устанавливать здоровые границы в семье. Забота вдохновляет других на любовь.',
+        7: 'Развивайте интуицию и не изолируйтесь от мира полностью. Не бойтесь делиться знаниями с другими. Доверяйте внутреннему знанию при решениях. Находите баланс между уединением и общением. Мудрость — главное преимущество в жизни. Учитесь применять знания на практике постоянно. Не бойтесь выглядеть странно для других. Развивайте коммуникацию для передачи идей. Помните что не все готовы к глубоким разговорам. Миссия — искать истину и делиться мудростью. Создавайте пространство для размышлений. Будьте наставником для тех кто ищет знания. Не бойтесь задавать неудобные вопросы обществу. Развивайте духовные практики для роста. Помните о балансе между анализом и действием. Заботьтесь о ментальном здоровье через медитацию. Окружайте себя людьми которые ценят глубину. Практикуйте благодарность за способность видеть глубже. Верьте в способность находить ответы на сложные вопросы. Не бойтесь идти против общепринятых мнений. Мудрость вдохновляет других на поиск.',
+        8: 'Развивайте деловые навыки и не жертвуйте здоровьем ради успеха. Не бойтесь брать финансовую ответственность. Создавайте изобилие во всех сферах жизни. Находите баланс между материальным и духовным. Амбициозность — главное преимущество в карьере. Учитесь этичному ведению бизнеса постоянно. Не бойтесь инвестировать в себя и развитие. Развивайте управление людьми и ресурсами. Помните что успех без здоровья не имеет ценности. Миссия — достигать успеха и помогать другим. Создавайте предприятия которые приносят пользу миру. Будьте лидером который вдохновляет команду. Не бойтесь принимать трудные финансовые решения. Развивайте финансовую грамотность для инвестиций. Помните о балансе между работой и личной жизнью. Заботьтесь о здоровье несмотря на занятость. Окружайте себя успешными и этичными людьми. Практикуйте благодарность за материальные достижения. Верьте в способность создавать процветание. Не бойтесь делиться успехом с нуждающимися. Успех вдохновляет других на достижения.',
+        9: 'Развивайте сострадание и не теряйте себя в служении другим. Не берите на себя чужую карму и проблемы. Завершайте начатые дела перед новыми проектами. Находите баланс между служением и заботой о себе. Способность любить — главное преимущество. Учитесь отпускать то что отжило своё. Не бойтесь завершать токсичные отношения. Развивайте самовосстановление после помощи. Помните что нельзя спасти всех людей. Миссия — служить человечеству и завершать циклы. Создавайте проекты которые помогают многим. Будьте примером безусловной любви. Не бойтесь говорить о важных социальных проблемах. Развивайте духовные практики для внутреннего мира. Помните о балансе между отдачей и получением. Заботьтесь о здоровье не меньше чем о других. Окружайте себя людьми с похожими ценностями. Практикуйте благодарность за возможность служить. Верьте в способность изменить мир к лучшему. Не бойтесь завершать главы своей жизни. Любовь вдохновляет других на служение.'
+    };
+    return advices[num] || '';
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    createParticles();
+    setCurrentDate();
+    console.log('✨ Мистический Портал загружен!');
+});
+</script>
+</body>
+</html>
